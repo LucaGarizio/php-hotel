@@ -1,7 +1,6 @@
 <!-- ## Todo
 Partiamo da questo array di hotel: 
 ```php
-
 ```
 Stampare tutti i nostri hotel con tutti i dati disponibili.
 
@@ -40,6 +39,15 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 					<option value="">Tutti gli Hotel </option>
 					<option value="yes">Con Parcheggio</option>	
 				</select>
+				<label for="vote"></label>
+				<select style="width: 200px" class="p-2 rounded-0 border-0 ms-3" name="vote" id="vote" >
+					<option value="">Valutazione</option>
+					<option value="1">1 stella</option>
+					<option value="2">2 stella</option>	
+					<option value="3">3 stella</option>	
+					<option value="4">4 stella</option>	
+					<option value="5">5 stella</option>		
+				</select>
 				<button class="p-1 ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button>
 			</form>
 		</div>
@@ -48,6 +56,7 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 </section>
 
 <?php
+
 $hotels = [
 
 	[
@@ -88,30 +97,45 @@ $hotels = [
 
 ];
 
-// controlla se e stata scelta un'opzione
+// controlla se un'opzione è stata selezionata per il parcheggio
 if (isset($_GET['parking'])) {
 	$parkingSearch = $_GET['parking'];
 } else {
 	$parkingSearch = '';
 }
 
+//  controlla se un'opzione è stata selezionata per il voto
+if (isset($_GET['vote'])) {
+	$vote = $_GET['vote'];
+} else {
+	$vote = '';
+}
+
 echo '<div class="container">';
 echo '<div class="row justify-content-between py-5 gy-4">';
+
+// cicla l'arrey e estrapola e stampa tutti gli elementi all'interno
 foreach ($hotels as $hotel) {
-	// controllo se l'utente ha selezionato l'opzione con parcheggio  e se l'hotel non ha un parcheggio
+	// controllo se un'opzione  è stata selezionata e se l'hotel non ha un parcheggio
 	if ($parkingSearch === 'yes' && !$hotel['parking']) {
         continue;
 	}
 
+	// controlla se un'opzione è stata selezionata e se la valutazione dell'hotel ha una valutazione diversa da quella scelta dall'utente
+	if ($vote !== '' && $hotel['vote'] != $vote) {
+        continue;
+	}
+
+	
     echo '<div class="col-5 p-3 border" style="background-color:white;">'; 
     echo "<h2>" . $hotel['name'] . "</h2>";
     echo "<p>Descrizione: " . $hotel['description'] . "</p>";
-    // echo "<p>Parcheggio: ";
-	// 	if ($hotel['parking'] === true) {
-   	// 	 echo 'Yes';
-	// 	} else {
-    // 	echo 'No';
-	// 	}
+    echo "<p>Parcheggio: ";
+		if ($hotel['parking'] === true) {
+   		 echo 'Yes';
+		} else {
+    	echo 'No';
+		}
 echo "</p>";
     echo "<p>Votazione: " . $hotel['vote'] . "</p>";
     echo "<p>Distanza dal centro: " . $hotel['distance_to_center'] . " km</p>";
