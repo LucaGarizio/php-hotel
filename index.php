@@ -25,22 +25,22 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Esercizio 1</title>
 </head>
 <body style="background-color: #0090ed; color:#333;">
 
 <section class="bg-dark">
 <div class="container">
-	<div class="row py-3 justify-content-start">
-		<div class="col-12 px-0 d-flex ">
+	<div class="row py-3">
+		<div class="col-12 px-0 d-flex">
 			<form>
-				<label for="parking"></label>
-				<select style="width: 200px" class="p-2 rounded-0 border-0" name="parking" id="parking" >
+				<!-- <label for="parking"></label>
+				<select style="width: 167px" class="p-2 rounded-0 border-0 text-white bg-danger" name="parking" id="parking" >
 					<option value="">Tutti gli Hotel </option>
-					<option value="yes">Con Parcheggio</option>	
+					<option value="parkingsearch">Con Parcheggio</option>	
 				</select>
 				<label for="vote"></label>
-				<select style="width: 200px" class="p-2 rounded-0 border-0 ms-3" name="vote" id="vote" >
+				<select style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" name="vote" id="vote" >
 					<option value="">Valutazione</option>
 					<option value="1">1 stella</option>
 					<option value="2">2 stella</option>	
@@ -48,7 +48,13 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 					<option value="4">4 stella</option>	
 					<option value="5">5 stella</option>		
 				</select>
-				<button class="p-1 ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button>
+					<button class="p-2 text-white bg-danger ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button> -->
+					<input style="width: 167px" class="p-2 rounded-0 border-0 text-white bg-danger" type="text" name="parking" id="parking" placeholder="Cerca">
+
+                    <label for="vote"></label>
+                    <input style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" type="text" name="vote" id="vote" placeholder="Valutazione">
+
+                    <button class="p-2 text-white bg-danger ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button>
 			</form>
 		</div>
 	</div>
@@ -117,12 +123,12 @@ echo '<div class="row justify-content-between py-5 gy-4">';
 // cicla l'arrey e estrapola e stampa tutti gli elementi all'interno
 foreach ($hotels as $hotel) {
 	// controllo se un'opzione  è stata selezionata e se l'hotel non ha un parcheggio
-	if ($parkingSearch === 'yes' && !$hotel['parking']) {
+	if ($parkingSearch !== '' && !$hotel['parking']) {
         continue;
 	}
 
-	// controlla se un'opzione è stata selezionata e se la valutazione dell'hotel ha una valutazione diversa da quella scelta dall'utente
-	if ($vote !== '' && $hotel['vote'] != $vote) {
+	// controlla se un'opzione è stata selezionata e se la valutazione dell'hotel e minore rchiesta da quella dell'utente
+	if ($vote !== '' && $hotel['vote'] < $vote) {
         continue;
 	}
 
@@ -152,5 +158,14 @@ echo "</div>";
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
             0 6px 12px 0 rgba(0, 0, 0, 0.19);
 	}
+
+	label{
+		display: inline;
+	}
+
+	select option[selected] {
+      background-color: #dc3545;
+	  color: white;
+    }
 </style>
 </html>
