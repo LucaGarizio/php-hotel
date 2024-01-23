@@ -34,13 +34,15 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 	<div class="row py-3">
 		<div class="col-12 px-0 d-flex">
 			<form>
-				<!-- <label for="parking"></label>
-				<select style="width: 167px" class="p-2 rounded-0 border-0 text-white bg-danger" name="parking" id="parking" >
+				<label for="parking"></label>
+				<select style="width: 200px" class="p-2 rounded-0 border-0 text-white bg-primary" name="parking" id="parking" >
 					<option value="">Tutti gli Hotel </option>
 					<option value="parkingsearch">Con Parcheggio</option>	
 				</select>
+                <!-- <label for="vote"></label>
+                <input style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" type="text" name="vote" id="vote"placeholder="Valutazione"> -->
 				<label for="vote"></label>
-				<select style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" name="vote" id="vote" >
+				<select style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-primary" name="vote" id="vote" >
 					<option value="">Valutazione</option>
 					<option value="1">1 stella</option>
 					<option value="2">2 stella</option>	
@@ -48,13 +50,7 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 					<option value="4">4 stella</option>	
 					<option value="5">5 stella</option>		
 				</select>
-					<button class="p-2 text-white bg-danger ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button> -->
-					<input style="width: 167px" class="p-2 rounded-0 border-0 text-white bg-danger" type="text" name="parking" id="parking" placeholder="Cerca">
-
-                    <label for="vote"></label>
-                    <input style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" type="text" name="vote" id="vote" placeholder="Valutazione">
-
-                    <button class="p-2 text-white bg-danger ms-3 rounded-0 border-0" style="width: 100px" type="submit">Filtra</button>
+                <button class="p-2 text-white bg-primary ms-3 rounded-0 border-0" style="width: 140px" type="submit">Filtra</button>
 			</form>
 		</div>
 	</div>
@@ -64,7 +60,6 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 <?php
 
 $hotels = [
-
 	[
 		'name' => 'Hotel Belvedere',
 		'description' => 'Hotel Belvedere Descrizione',
@@ -111,24 +106,24 @@ if (isset($_GET['parking'])) {
 }
 
 //  controlla se un'opzione è stata selezionata per il voto
-if (isset($_GET['vote'])) {
+if (isset($_GET['vote']))
+ {
 	$vote = $_GET['vote'];
 } else {
 	$vote = '';
 }
 
 echo '<div class="container">';
-echo '<div class="row justify-content-between py-5 gy-4">';
-
+echo '<div class="row justify-content-between py-5 gy-5">';
 // cicla l'arrey e estrapola e stampa tutti gli elementi all'interno
 foreach ($hotels as $hotel) {
-	// controllo se un'opzione  è stata selezionata e se l'hotel non ha un parcheggio
+	// controllo se un'opzione è stata selezionata e se l'hotel non ha un parcheggio
 	if ($parkingSearch !== '' && !$hotel['parking']) {
         continue;
 	}
 
-	// controlla se un'opzione è stata selezionata e se la valutazione dell'hotel e minore rchiesta da quella dell'utente
-	if ($vote !== '' && $hotel['vote'] < $vote) {
+	// controlla se la valutazione dell'hotel é inferiore rispetto alla richiesta dell'utente
+	if ($hotel['vote'] < $vote) {
         continue;
 	}
 
@@ -138,7 +133,7 @@ foreach ($hotels as $hotel) {
     echo "<p>Descrizione: " . $hotel['description'] . "</p>";
     echo "<p>Parcheggio: ";
 		if ($hotel['parking'] === true) {
-   		 echo 'Yes';
+   		 echo 'Si';
 		} else {
     	echo 'No';
 		}
@@ -163,9 +158,6 @@ echo "</div>";
 		display: inline;
 	}
 
-	select option[selected] {
-      background-color: #dc3545;
-	  color: white;
-    }
+	
 </style>
 </html>
