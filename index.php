@@ -26,38 +26,8 @@ Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Esercizio 1</title>
-</head>
-<body style="background-color: #0090ed; color:#333;">
 
-<section class="bg-dark">
-<div class="container">
-	<div class="row py-3">
-		<div class="col-12 px-0 d-flex">
-			<form>
-				<label for="parking"></label>
-				<select style="width: 200px" class="p-2 rounded-0 border-0 text-white bg-primary" name="parking" id="parking" >
-					<option value="">Tutti gli Hotel </option>
-					<option value="parkingsearch">Con Parcheggio</option>	
-				</select>
-                <!-- <label for="vote"></label>
-                <input style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" type="text" name="vote" id="vote"placeholder="Valutazione"> -->
-				<label for="vote"></label>
-				<select style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-primary" name="vote" id="vote" >
-					<option value="">Valutazione</option>
-					<option value="1">1 stella</option>
-					<option value="2">2 stella</option>	
-					<option value="3">3 stella</option>	
-					<option value="4">4 stella</option>	
-					<option value="5">5 stella</option>		
-				</select>
-                <button class="p-2 text-white bg-primary ms-3 rounded-0 border-0" style="width: 140px" type="submit">Filtra</button>
-			</form>
-		</div>
-	</div>
-</div>
-</section>
-
-<?php
+	<?php
 
 $hotels = [
 	[
@@ -100,9 +70,9 @@ $hotels = [
 
 // controlla se un'opzione è stata selezionata per il parcheggio
 if (isset($_GET['parking'])) {
-	$parkingSearch = $_GET['parking'];
+	$parking = $_GET['parking'];
 } else {
-	$parkingSearch = '';
+	$parking = '';
 }
 
 //  controlla se un'opzione è stata selezionata per il voto
@@ -112,15 +82,50 @@ if (isset($_GET['vote']))
 } else {
 	$vote = '';
 }
+?>
 
+</head>
+<body style="background-color: #0090ed; color:#333;">
+
+<section class="bg-dark">
+<div class="container">
+	<div class="row py-3">
+		<div class="col-12 px-0 d-flex">
+			<form>
+				<label for="parking"></label>
+				<select style="width: 200px" class="p-2 rounded-0 border-0 text-white bg-primary" name="parking" id="parking" >
+					<option value="">Tutti gli Hotel </option>
+					<option value="1">Con Parcheggio</option>	
+					<option value="2">Senza Parcheggio</option>
+				</select>
+                <!-- <label for="vote"></label>
+                <input style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-danger" type="text" name="vote" id="vote"placeholder="Valutazione"> -->
+				<label for="vote"></label>
+				<select style="width: 167px" class="p-2 rounded-0 border-0 ms-3 text-white bg-primary" name="vote" id="vote" >
+					<option value="">Valutazione</option>
+					<option value="1">1 stella</option>
+					<option value="2">2 stella</option>	
+					<option value="3">3 stella</option>	
+					<option value="4">4 stella</option>	
+					<option value="5">5 stella</option>		
+				</select>
+                <button class="p-2 text-white bg-primary ms-3 rounded-0 border-0" style="width: 140px" type="submit">Filtra</button>
+			</form>
+		</div>
+	</div>
+</div>
+</section>
+
+
+<?php
 echo '<div class="container">';
 echo '<div class="row justify-content-between py-5 gy-5">';
-// cicla l'arrey e estrapola e stampa tutti gli elementi all'interno
+// cicla l'array e stampa tutti gli elementi all'interno
 foreach ($hotels as $hotel) {
-	// controllo se un'opzione è stata selezionata e se l'hotel non ha un parcheggio
-	if ($parkingSearch !== '' && !$hotel['parking']) {
+	// se option uguale a 1 e l'hotel non ha un parcheggio mostra hotel con parcheggio / se option  uguale a 2 e l'hotel ha un parcheggio allora mostra hotel senza parcheggio
+	if (($parking == 1 && !$hotel['parking']) || ($parking == 2 && $hotel['parking'])) {
         continue;
-	}
+    }
 
 	// controlla se la valutazione dell'hotel é inferiore rispetto alla richiesta dell'utente
 	if ($hotel['vote'] < $vote) {
